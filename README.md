@@ -1,7 +1,7 @@
 # 113screenshot
 使用 PuppeteerSharp 作的簡單 cli 截圖機
 
-<code>
+<pre>
 My URL Screenshot
 Author: FeatherMountain (https://3wa.tw)
 Version: 0.01
@@ -15,5 +15,6 @@ Version: 0.01
 
  Example:
    113screenshot.exe -url test.html -w 1920 -h 1080 -d 3000 -o output.png
+</pre>
 
-</code>
+<img src="screenshot/1.png" />
