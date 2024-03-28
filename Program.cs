@@ -85,35 +85,42 @@ namespace _113screenshot
             {
                 Headless = true
             });
-
-            // Create a new page
-            var page = await browser.NewPageAsync();
-
-            // Navigate to the URL
-            //page.goto(`file:///C:/pup_scrapper/testpage/TM.html`);
-
-            if (my.is_file(url))
+            try
             {
-                url = "file://" + System.IO.Path.GetFullPath(url).Replace("\\", "/");
+                // Create a new page
+                var page = await browser.NewPageAsync();
+
+                // Navigate to the URL
+                //page.goto(`file:///C:/pup_scrapper/testpage/TM.html`);
+
+                if (my.is_file(url))
+                {
+                    url = "file://" + System.IO.Path.GetFullPath(url).Replace("\\", "/");
+                }
+
+                await page.GoToAsync(url);
+
+                // Set the viewport size if needed (optional)
+                await page.SetViewportAsync(new ViewPortOptions
+                {
+                    Width = w,
+                    Height = h
+                });
+                Thread.Sleep(delayms);
+                // Take the screenshot
+                await page.ScreenshotAsync(output);
+
+                // Close the browser
+                await browser.CloseAsync();
+                browser.Dispose();
+                browser = null;
+                Console.WriteLine("Screenshot saved! " + System.IO.Path.GetFullPath(output));
             }
-
-            await page.GoToAsync(url);
-
-            // Set the viewport size if needed (optional)
-            await page.SetViewportAsync(new ViewPortOptions
+            catch
             {
-                Width = w,
-                Height = h
-            });
-            Thread.Sleep(delayms);
-            // Take the screenshot
-            await page.ScreenshotAsync(output);
-
-            // Close the browser
-            await browser.CloseAsync();
-            browser.Dispose();
-            browser = null;
-            Console.WriteLine("Screenshot saved! " + System.IO.Path.GetFullPath(output));
+                browser.Dispose();
+                browser = null;
+            }
         }
     }
 }
